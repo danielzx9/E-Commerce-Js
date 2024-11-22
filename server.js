@@ -3,6 +3,8 @@ const dotenv = require('dotenv');
 const cors = require ('cors');
 const bodyParser = require('body-parser');
 const connectDB = require('./config/db');
+const userRoutes = require('./routes/userRoutes');
+
 
 //variables entorno
 dotenv.config();
@@ -13,6 +15,7 @@ connectDB();
 const app = express();
 
 //middleware
+app.use('/api/users', userRoutes);
 app.use(cors());
 app.use(bodyParser.json());
 
