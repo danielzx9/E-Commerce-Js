@@ -5,7 +5,7 @@ const router = express.Router();
 
 //registrar usuario
 router.post('/register', async (req,res) =>{
-    const {name,email,password}= req.body;
+    const{name,email,password}= req.body;
     try{
         const userExists = await User.findOne({email});
         if(userExists) return res.status(400).json({message:'El usuario ya existe'});
@@ -13,7 +13,7 @@ router.post('/register', async (req,res) =>{
         const user = new User({name,email,password});
         const savedUser = await user.save();
         const token = jwt.sign({id: savedUser._id}, process.env.JWT_SECRET, {expiresIn: '30d'});
-        res.status(201).json({message:error.message});
+        res.status(201).json({token});
     } catch (error){
         res.status(500).json({message:error.message});
     }
@@ -33,4 +33,6 @@ router.post('/login', async (req,res) =>{
     } catch (error){
         res.status(500).json({message:error.message});
     }
-})
+});
+
+module.exports = router;

@@ -3,6 +3,7 @@ const User = require('../models/User');
 
 const protect = async (req, res, next) => {
     let token;
+    console.log(req.headers.authorization);
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
         try {
             token = req.headers.authorization.split(' ')[1];
@@ -16,3 +17,5 @@ const protect = async (req, res, next) => {
         res.status(401).json({ message: 'No autorizado, no hay token' });
     }
 };
+
+module.exports = { protect};
